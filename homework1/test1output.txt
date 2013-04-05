@@ -1,0 +1,6 @@
+Code run by Daniel McInally
+Environment variable UWHPSC is /home/uwhpsc/uwhpsc
+Environment variable MYHPSC is /home/uwhpsc/myhpsc
+Imported numpy ok
+Imported matplotlib ok
+Imported pylab ok
