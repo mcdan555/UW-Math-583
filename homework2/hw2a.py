@@ -1,5 +1,5 @@
 """
-Written by: Daniel McInally  AMATH 583 - HW 2
+Daniel McInally  AMATH 583 - HW 2
 Derived from demo1.py (Leveque 2013)
 
 This program will determine the polynomial that
@@ -18,7 +18,7 @@ xi = np.array([-1.,1.,2.])
 yi = np.array([0.,4.,3.])
 
 # matrix and b value
-A = np.array([[1.,-1.,1.],[1.,0.,0.],[1.,2.,4.]])
+A = np.array([[1.,-1.,1.],[1.,1.,1.],[1.,2.,4.]])
 b = yi
 
 
@@ -28,7 +28,7 @@ c = solve(A,b)
 print "The polynomial coefficients are:"
 print c
 
-# Plot the polynomial
+# Plot the polynomial and save
 x = np.linspace(-2,3,1001)
 y = c[0] + c[1]*x + c[2]*x**2
 
