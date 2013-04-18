@@ -32,7 +32,7 @@ def quad_interp(xi,yi):
 
         # Set up the linear system
 
-        A = A = np.vstack([np.ones(3), xi, xi**2]).T
+        A = np.vstack([np.ones(3), xi, xi**2]).T
         b = yi
 
 
@@ -86,7 +86,7 @@ def cubic_interp(xi,yi):
 
         # Set up the linear system
 
-        A = A = np.vstack([np.ones(4), xi, xi**2, xi**3]).T
+        A = np.vstack([np.ones(4), xi, xi**2, xi**3]).T
         b = yi
 
 
@@ -118,6 +118,67 @@ def plot_cubic (xi,yi):
         plt.title("Data points and interpolating polynomial")
 
         plt.savefig('cubic.png')
+
+def poly_interp(xi,yi):
+        """
+        polynomial interpolation.  Compute the coefficients of the polynomial
+        interpolating the points (xi[i],yi[i]) for i = 0,1,2,3,...n.
+        Returns c, an array containing the coefficients of
+        p(x) = c[0] + c[1]*x + c[2]*x**2 + c[3]*x**3 + ... + c[n]*x**n
+
+        """
+
+        # Error handling of input parameters
+
+        error_message = "xi and yi should have type numpy.ndarray"
+        assert (type(xi) is np.ndarray) and (type(yi) is np.ndarray), error_message
+
+        error_message = "xi and yi should have equal length"
+        assert len(xi)==len(yi), error_message
+
+
+        # Set up the linear system
+        n=len(xi)
+        A=np.array([np.ones(n)], dtype=float)
+        for i in range(1,n):
+                Ai=np.array(xi**i, dtype=float)
+                A = np.vstack([A,Ai])
+        A=A.T
+        b = yi
+        
+
+        #solving the system
+        c = solve(A,b)
+
+        return c
+
+def plot_poly (xi,yi):
+        """
+        Imputs two arrays of any length, and computes the coefficient
+        matrix from the interpolation, and saves a plot file
+        poly.png
+        """
+
+        c = poly_interp(xi,yi)
+        n=len(xi)
+
+        # Plot the polynomial
+        x = np.linspace(xi.min() - 1,  xi.max() + 1, 1000)
+        y = c[n-1]
+        for j in range(n-1, 0, -1):
+            y = y*x + c[j-1]
+
+        plt.figure(1)
+        plt.clf()
+        plt.plot(x,y,'b-')
+        
+        plt.plot(xi,yi, 'ro')
+        plt.ylim(yi.min()-1,yi.max()+1)
+        
+        plt.title("Data points and interpolating polynomial")
+
+        plt.savefig('poly.png')
+        
         
 # ------------------------------------------------
 
@@ -157,6 +218,34 @@ def test_cubic1():
         yi = np.array([ 5., 9., 5., -7.])
         c = cubic_interp(xi,yi)
         c_true = np.array([5.,  1.,  2., 1.])
+        print "c =      ", c
+        print "c_true = ", c_true
+        # test that all elements have small error:
+        assert np.allclose(c, c_true), \
+                "Incorrect result, c = %s, Expected: c = %s" % (c,c_true)
+
+def test_poly1():
+        """
+        Test code, no return value or exception if test runs properly.
+        """
+        xi = np.array([ 0.,  1.,  -1., -3.])
+        yi = np.array([ 5., 9., 5., -7.])
+        c = poly_interp(xi,yi)
+        c_true = np.array([5.,  1.,  2., 1.])
+        print "c =      ", c
+        print "c_true = ", c_true
+        # test that all elements have small error:
+        assert np.allclose(c, c_true), \
+                "Incorrect result, c = %s, Expected: c = %s" % (c,c_true)
+
+def test_poly2():
+        """
+        Test code, no return value or exception if test runs properly.
+        """
+        xi = np.array([ -2.,  -1.,  0., 2., 3.])
+        yi = np.array([ 40., 8., 2., 20., 80.])
+        c = poly_interp(xi,yi)
+        c_true = np.array([2.,  -1.,  3., -1., 1.])
         print "c =      ", c
         print "c_true = ", c_true
         # test that all elements have small error:
