@@ -13,7 +13,7 @@
 
 import numpy as np
 
-def solve(fvals,x0,debug=False)
+def solve(fvals,x0,debug=False):
     """
     This function will use Newton's method to find the roots of the
     equation defined by fvals. fvals contains the definition of the equation
@@ -22,33 +22,29 @@ def solve(fvals,x0,debug=False)
 
     # set initial guess and number of iterations
 
-    x = x0
+    s = x0
     kmax = 100
     tol = 1.e-14
 
     if debug:
-        print "Initial guess: x = %22.15e" % x
+        print "Initial guess: x = %22.15e" % s
 
     # do the newton iteration
 
     for k in range(kmax):
-        (f,fp)=fvals(x)
+        f,fp = fvals(s)
         s0=s
         s=s-f/fp
 
-
+        if abs(f)<tol:
+            break
 
         if debug:
-            print "After %k interations, x = %22.15e" % (k,s)
+            print "After %s interations, x = %22.15e" % (k+1,s)
+
+
+    return s,k
         
-            
-    
-
-
-
-
-
-
 
 def fvals_sqrt(x):
     """
