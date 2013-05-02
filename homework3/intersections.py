@@ -29,18 +29,18 @@ def fval_f (x):
 
 def plotfuncs (sol):
 
-    x=linspace(-10,10,2000)
-
-    print sol,x
+    x=linspace(-5,5,2000)
 
     for k in x:
         plot(k,fval_g1(k),',')
         plot(k,fval_g2(k),',')
 
     for k in sol:
-        plot(k,fval_g1(k),'b.')
+        plot(k,fval_g1(k),'k.')
 
-    title("hello")
+    ylim(-5,5)
+    xlim(-5,5)
+    title("Plots and Intersections of g1(x)=x cos(pi*x) and g2(x)=1-0.6x^2")
     savefig('intersections.png')
 
 def findintersections():
