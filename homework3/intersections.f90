@@ -17,7 +17,6 @@ integer, parameter :: n=4
 integer :: k,iters
 real(kind=8), dimension(n) :: x0,x
 logical :: debug=.false.
-!real(kind=8), external :: f, fp
 
 x0 = (/-2.18026,-1.61399,-0.794267,1.44331/)
 
@@ -25,8 +24,9 @@ x0 = (/-2.18026,-1.61399,-0.794267,1.44331/)
 do k=1,n
 	call solve(f,fp, x0(k), x(k), iters, debug)
 	print *
-	print *, "solve returns x=" ,x(k), "after", iters, "iterations"
-	print *, "the value of f(x) is ", f(x(k))
+	print *, "With initial guess x0= ",x0(k)
+	print 11, x(k), iters
+11	format('      solve returns x=   ',e22.15,'  after', i3, '  iterations')
 	enddo
 
 end program intersections

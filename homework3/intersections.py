@@ -9,7 +9,6 @@
 """
 
 from newton import solve as newtsolve
-#from numpy import *
 from pylab import *
 from math import *
 
@@ -52,12 +51,12 @@ def findintersections():
     x0 = [-2.18026,-1.61399,-0.794267,1.44331] #tupple of initial values
     sol=[]
     
-    for k in x0:
+    for k in range(4):
         print " "
-        x,iters = newtsolve(fval_f,k)
+        x,iters = newtsolve(fval_f,x0[k])
+        print "With initial guess x0 = %22.15e," % x0[k]
         print "solve returns x = %22.15e after %i interations " % (x,iters)
         f,fp = fval_f(x)
-        print "the value of f(x) is %22.15e" % f
         assert f < 1e-14, "*** Unexpected result: x = %22.15e" % x
         sol.append(x)
     return sol
