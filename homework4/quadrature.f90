@@ -10,13 +10,12 @@ module quadrature
 	
 contains
 
-real(kind=8), dimension(n) function linspace (a,b,n)
+function linspace (a,b,n)
 
 	! This function will generate the the linear space
 	
-	implicit none
 	integer, intent(in) :: a,b,n
-	real(kind=8), dimension(n) :: ls
+	real(kind=8) ::linspace(n),ls(n)
 	real(kind=8) :: value
 	integer :: j
 	
@@ -25,8 +24,8 @@ real(kind=8), dimension(n) function linspace (a,b,n)
 	do j=1,n
 		ls(j)=value
 		enddo
-	
-	return ls
+		
+	linspace=ls
 	
 end function linspace
 	
@@ -50,21 +49,21 @@ real(kind=8) function trapezoid (f,a,b,n)
 	!local variables
 	real(kind=8) :: base
 	integer :: j,iters
-	real(kind=8), dimension(n) :xj,fj
+	real(kind=8), dimension(n) :: xj,fj
 	
 	
 	base = (b-a) / (n-1)
 	xj = linspace(a,b,n)
 	
 	do j=1,n
-		fj(j)=f1(xj(j))
+		fj(j)=f(xj(j))
 		enddo
 	
-	int_trapezoid = base*sum(fj) - 0.5*base* (fj(a) +fj(b))
+	trapezoid = base*sum(fj) - 0.5*base* (fj(a) +fj(b))
 	
-	return int_trapezoid
 	
 end function trapezoid
 	
+end module quadrature
 	
-	
+
